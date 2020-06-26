@@ -41,11 +41,26 @@ class App extends Component {
     })
   }
 
-  deletePerson(index) {
+  deletePerson = (index) => {
     // const persons = this.state.persons.slice();
     const persons = [...this.state.persons];
     persons.splice(index, 1);
     this.setState({persons:persons});
+  }
+
+  nameChangeHandler = (event, index) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === index;
+    });
+
+    const person = {
+      ...this.state.persons[personIndex]
+    }
+
+    person.name = event.target.value;
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+    this.setState({persons: persons});
   }
 
   render() {
@@ -66,7 +81,8 @@ class App extends Component {
               name={person.name}
               age={person.age}
               click={() => this.deletePerson(index)}
-              key={person.id} />
+              key={person.id}
+              change={(event)=> this.nameChangeHandler(event,person.id)} />
           })}
         </div>
       );
