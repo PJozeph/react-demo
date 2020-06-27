@@ -9,7 +9,7 @@ const persons = (props) => (
           name={person.name}
           age={person.age}
           click={() => props.clicked(index)}
-          change={(event) => props.change(event, person.id)} />
+          change={(event) => props.changed(event, person.id)} />
       })
     );
 export default persons;
