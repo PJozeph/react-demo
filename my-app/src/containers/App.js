@@ -1,7 +1,7 @@
-import './App.css';
-import Person from './Person/Person'
+import '../containers/App.css';
+import Person from '../components/Person/Person';
+import Persons from '../components/Persons/Persons'
 import React, { Component } from 'react';
-import person from './Person/Person';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
@@ -27,25 +27,6 @@ class App extends Component {
     ],
     someOtherState: 'just some other value',
     showPersos: false
-  }
-
-  switchNameHandler = (newName) => {
-    console.log("button was clicked");
-    this.setState({
-      persons: [
-        { name: newName, age: 29 },
-        { name: 'Anna Marsh', age: 25 },
-      ]
-    });
-  }
-
-  nameChangeHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: "József", age: 29 },
-        { name: event.target.value, age: 25 },
-      ]
-    });
   }
 
   togglePersonHandler = () => {
@@ -95,14 +76,10 @@ class App extends Component {
     if (this.state.showPersos) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return <Person
-              key={person.id}
-              name={person.name}
-              age={person.age}
-              click={() => this.deletePerson(index)}
-              change={(event) => this.nameChangeHandler(event, person.id)} />
-          })}
+          <Persons 
+            persons={this.state.persons} 
+            change={this.nameChangeHandler} 
+            click={this.deletePerson}/>
         </div>
       );
 
