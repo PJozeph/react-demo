@@ -5,6 +5,11 @@ import Cokpit from '../components/Cokpit/Cokpit'
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    console.log('App.js constacture');
+  }
+
   state = {
     persons: [
       { id: '0', name: 'József', age: 29 },
@@ -12,7 +17,17 @@ class App extends Component {
       { id: '2', name: 'Mária', age: 29 },
     ],
     someOtherState: 'just some other value',
-    showPersos: false
+    showPersos: false,
+    showCokpit: true
+  }
+
+  static getDrivedStateFromProps(props, state) {
+    console.log('App.js getDrivedStateFromProps', props);
+    return state;
+  }
+
+  componentDidMount(){
+    console.log('[App.js] componentDidMount()')
   }
 
   togglePersonHandler = () => {
@@ -27,6 +42,15 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons.splice(index, 1);
     this.setState({ persons: persons });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate');
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate()')
   }
 
   nameChangeHandler = (event, index) => {
@@ -45,7 +69,7 @@ class App extends Component {
   }
 
   render() {
-
+    console.log('[App.js] rendering...')
     let persons = null;
     if (this.state.showPersos) {
       persons = (
@@ -60,10 +84,15 @@ class App extends Component {
 
     return (
       <div className='App'>
-        <Cokpit 
+        <button onClick={() => {
+          this.setState({showCokpit: false});
+        }}>Show Cokpit</button>
+        {this.state.showCokpit ? <Cokpit
+        persons={this.state.persons}
+        title={this.props.appTitle} 
         person={this.state.persons}
         toggle={this.togglePersonHandler}
-        showPersos={this.state.showPersos}/>
+        showPersos={this.state.showPersos}/> : null}
         {persons}
       </div>
     );

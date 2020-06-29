@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
 import '../Person/Person.css';
 import styled from 'styled-components';
+
 
 const PersonDiv = styled.div`
     width: 60%;
@@ -13,19 +14,27 @@ const PersonDiv = styled.div`
     @media(min-width: 500px) {
         width :450px;
     }`;
+class Person extends Component {
 
-const person = (props) => {
-    return (
-        <PersonDiv>
-            <p>I am a person</p>
-            <p onClick={props.click}>My name is {props.name}</p>
-            <p>I am {props.age} years old</p>
-            <p>{props.children}</p>
-            <input type="text" onChange={props.change} value={props.name}></input>
-        </PersonDiv>
-    );
+    render() {
+        console.log('[Person.js] rendering....')
+        return (
+            <PersonDiv>
+                <p>I am a person</p>
+                <p onClick={this.props.click}>My name is {this.props.name}</p>
+                <p>I am {this.props.age} years old</p>
+                <p>{this.props.children}</p>
+                <input type="text" onChange={this.props.change} value={this.props.name}></input>
+            </PersonDiv>
+        );
+    }
+
+    componentWillUnmount() {
+        console.log('[Person.js] componentWillUnmount()')
+      }
+
 }
 // two way binding
 //<input type="text" onChange={props.change} value={props.name}></input>
 
-export default person;
+export default Person;

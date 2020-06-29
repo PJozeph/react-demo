@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
@@ -14,24 +14,46 @@ const StyledButton = styled.button`
     color: black;
   }`
 
-const cokpit = (props) => {
-    let classes = [];
+const Cokpit = (props) => {
 
-    if (props.persons <= 2) {
-        classes.push('red');
-    }
+  useEffect(() => {
+    console.log('[Cokpit.js] useEffect');
+    //use HTTP request
+    // runs for every update
 
-    if (props.persons <= 1) {
-        classes.push('bold');
+    setTimeout(() => {
+      alert('Save data in cloud')
+    }, 1000);
+    return () => {
+      console.log('[Cokpit.js] clean up work !!!!!!!!!!!!!!!!!!!!!!!!!!')
     }
-    return (
-        <div>
-            <h1>Hi I am React</h1>
-            <p className={classes.join(' ')}>It is really working</p>
-            <StyledButton alt={props.showPersos}
-                onClick={props.toggle}>Toggle Persons
+  // }, []); // execute only once
+  }, [props.persons]);
+
+  useEffect(() => {
+    console.log('[Cokpit.js] 2nd useEffect');
+    return () => {
+      console.log('[Cokpit.js] 2nd clean up work !!!!!!!!!!!!!!!!!!!!!!!!!!')
+    }
+  });
+
+  let classes = [];
+
+  if (props.persons <= 2) {
+    classes.push('red');
+  }
+
+  if (props.persons <= 1) {
+    classes.push('bold');
+  }
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      <p className={classes.join(' ')}>It is really working</p>
+      <StyledButton alt={props.showPersos}
+        onClick={props.toggle}>Toggle Persons
         </StyledButton>
-        </div>)
+    </div>)
 };
 
-export default cokpit;
+export default Cokpit;
