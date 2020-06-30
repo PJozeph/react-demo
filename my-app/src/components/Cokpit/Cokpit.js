@@ -15,6 +15,10 @@ const StyledButton = styled.button`
     color: black;
   }`
 
+const LoginButton = styled.button`
+  background-color: yellow;
+  margin: 5px; 
+  `
 const Cokpit = (props) => {
 
   const toggleButtonRef = useRef(null);
@@ -54,6 +58,7 @@ const Cokpit = (props) => {
   if (props.personsLength <= 1) {
     classes.push('bold');
   }
+
   return (
     <div>
       <h1>{props.title}</h1>
@@ -63,7 +68,7 @@ const Cokpit = (props) => {
         alt={props.showPersos}
         onClick={props.toggle}>Toggle Persons
       </StyledButton>
-        <button onClick={authContext.login}>Log in</button>
+      <LoginButton onClick={authContext.login}>Log in</LoginButton>
     </div>)
 };
 
