@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import styled from 'styled-components';
 import AuthContext from '../../context/auth-context';
 
@@ -19,6 +19,10 @@ const Cokpit = (props) => {
 
   const toggleButtonRef = useRef(null);
 
+  const authContext = useContext(AuthContext);
+
+  console.log(authContext.authenticated);
+
   useEffect(() => {
     console.log('[Cokpit.js] useEffect');
     //use HTTP request
@@ -29,7 +33,7 @@ const Cokpit = (props) => {
     //   }, 1000);
     toggleButtonRef.current.click();
     return () => {
-      console.log('[Cokpit.js] clean up work !!!!!!!!!!!!!!!!!!!!!!!!!!')
+      console.log('[Cokpit.js] clean up work !')
     }
   }, []); // execute only once
   // }, [props.persons]);
@@ -37,7 +41,7 @@ const Cokpit = (props) => {
   useEffect(() => {
     console.log('[Cokpit.js] 2nd useEffect');
     return () => {
-      console.log('[Cokpit.js] 2nd clean up work !!!!!!!!!!!!!!!!!!!!!!!!!!')
+      console.log('[Cokpit.js] 2nd clean up work !')
     }
   });
 
@@ -59,9 +63,7 @@ const Cokpit = (props) => {
         alt={props.showPersos}
         onClick={props.toggle}>Toggle Persons
       </StyledButton>
-      <AuthContext.Consumer>
-        {context => <button onClick={context.login}>Log in</button>}
-      </AuthContext.Consumer>
+        <button onClick={authContext.login}>Log in</button>
     </div>)
 };
 

@@ -33,23 +33,25 @@ class Person extends PureComponent {
         this.inputElementRef = React.createRef();
     }
 
+    static contextType = AuthContext;
+
     componentDidMount() {
         // this.inputElement.focus();
         this.inputElementRef.current.focus();
+        console.log(this.context.authenticated);
     }
+
 
     render() {
         console.log('[Person.js] rendering....')
         return (
             <Aux>
                 <PersonDiv>
-                    <AuthContext.Consumer>
-                        {
-                        (context) => 
-                        context.authenticated ? <p>Authenticated</p> : <p>Please Log in</p> 
-                        }
-                    </AuthContext.Consumer>
-                    
+                    {
+                        this.context.authenticated ?
+                            <p>Authorized</p> : <p>Log in</p>
+                    }
+
                     <p>I am a person</p>
                     <p onClick={this.props.click}>My name is {this.props.name}</p>
                     <p>I am {this.props.age} years old</p>
@@ -57,8 +59,8 @@ class Person extends PureComponent {
                     <input
                         // ref={(inputElement) => {this.inputElement = inputElement}}
                         ref={this.inputElementRef}
-                        type="text" 
-                        onChange={this.props.change} 
+                        type="text"
+                        onChange={this.props.change}
                         value={this.props.name}>
                     </input>
                 </PersonDiv>
@@ -75,10 +77,10 @@ class Person extends PureComponent {
 //<input type="text" onChange={props.change} value={props.name}></input>
 
 Person.propTypes = {
-    click : PropTypes.func,
-    change : PropTypes.func,
-    name : PropTypes.string,
-    age : PropTypes.number
+    click: PropTypes.func,
+    change: PropTypes.func,
+    name: PropTypes.string,
+    age: PropTypes.number
 }
 
 export default Person;
