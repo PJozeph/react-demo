@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import AuthContext from '../../context/auth-context';
 
 const StyledButton = styled.button`
   background-color: ${props => props.alt ? 'red' : 'green'};
@@ -16,19 +17,22 @@ const StyledButton = styled.button`
 
 const Cokpit = (props) => {
 
+  const toggleButtonRef = useRef(null);
+
   useEffect(() => {
     console.log('[Cokpit.js] useEffect');
     //use HTTP request
     // runs for every update
 
-    setTimeout(() => {
-      alert('Save data in cloud')
-    }, 1000);
+    //  setTimeout(() => {
+    //     alert('Save data in cloud')
+    //   }, 1000);
+    toggleButtonRef.current.click();
     return () => {
       console.log('[Cokpit.js] clean up work !!!!!!!!!!!!!!!!!!!!!!!!!!')
     }
-  // }, []); // execute only once
-  }, [props.persons]);
+  }, []); // execute only once
+  // }, [props.persons]);
 
   useEffect(() => {
     console.log('[Cokpit.js] 2nd useEffect');
@@ -39,21 +43,26 @@ const Cokpit = (props) => {
 
   let classes = [];
 
-  if (props.persons <= 2) {
+  if (props.personsLength <= 2) {
     classes.push('red');
   }
 
-  if (props.persons <= 1) {
+  if (props.personsLength <= 1) {
     classes.push('bold');
   }
   return (
     <div>
       <h1>{props.title}</h1>
       <p className={classes.join(' ')}>It is really working</p>
-      <StyledButton alt={props.showPersos}
+      <StyledButton
+        ref={toggleButtonRef}
+        alt={props.showPersos}
         onClick={props.toggle}>Toggle Persons
-        </StyledButton>
+      </StyledButton>
+      <AuthContext.Consumer>
+        {context => <button onClick={context.login}>Log in</button>}
+      </AuthContext.Consumer>
     </div>)
 };
 
-export default Cokpit;
+export default React.memo(Cokpit);

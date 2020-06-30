@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import '../Person/Person.css';
 import styled from 'styled-components';
-
+import Aux from '../../hoc/Auxiliary';
+import PropTypes from 'prop-types';
+import AuthContext from '../../context/auth-context';
 
 const PersonDiv = styled.div`
     width: 60%;
@@ -14,27 +16,69 @@ const PersonDiv = styled.div`
     @media(min-width: 500px) {
         width :450px;
     }`;
-class Person extends Component {
+
+class Person extends PureComponent {
+
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     if (nextProps.pesrons !== this.props.persons) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+    // <React.Fragment>  same as Aux.js
+
+    constructor(props) {
+        super(props);
+        this.inputElementRef = React.createRef();
+    }
+
+    componentDidMount() {
+        // this.inputElement.focus();
+        this.inputElementRef.current.focus();
+    }
 
     render() {
         console.log('[Person.js] rendering....')
         return (
-            <PersonDiv>
-                <p>I am a person</p>
-                <p onClick={this.props.click}>My name is {this.props.name}</p>
-                <p>I am {this.props.age} years old</p>
-                <p>{this.props.children}</p>
-                <input type="text" onChange={this.props.change} value={this.props.name}></input>
-            </PersonDiv>
+            <Aux>
+                <PersonDiv>
+                    <AuthContext.Consumer>
+                        {
+                        (context) => 
+                        context.authenticated ? <p>Authenticated</p> : <p>Please Log in</p> 
+                        }
+                    </AuthContext.Consumer>
+                    
+                    <p>I am a person</p>
+                    <p onClick={this.props.click}>My name is {this.props.name}</p>
+                    <p>I am {this.props.age} years old</p>
+                    <p>{this.props.children}</p>
+                    <input
+                        // ref={(inputElement) => {this.inputElement = inputElement}}
+                        ref={this.inputElementRef}
+                        type="text" 
+                        onChange={this.props.change} 
+                        value={this.props.name}>
+                    </input>
+                </PersonDiv>
+            </Aux>
         );
     }
 
     componentWillUnmount() {
         console.log('[Person.js] componentWillUnmount()')
-      }
+    }
 
 }
 // two way binding
 //<input type="text" onChange={props.change} value={props.name}></input>
+
+Person.propTypes = {
+    click : PropTypes.func,
+    change : PropTypes.func,
+    name : PropTypes.string,
+    age : PropTypes.number
+}
 
 export default Person;

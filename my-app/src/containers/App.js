@@ -2,6 +2,10 @@ import '../containers/App.css';
 import Persons from '../components/Persons/Persons'
 import React, { Component } from 'react';
 import Cokpit from '../components/Cokpit/Cokpit'
+import withClass from '../hoc/withClass'
+import Aux from '../hoc/Auxiliary';
+import AuthConext from '../context/auth-context'
+
 
 class App extends Component {
 
@@ -18,7 +22,9 @@ class App extends Component {
     ],
     someOtherState: 'just some other value',
     showPersos: false,
-    showCokpit: true
+    showCokpit: true,
+    changeCounter: 0,
+    isAuthenticated: false
   }
 
   static getDrivedStateFromProps(props, state) {
@@ -26,7 +32,7 @@ class App extends Component {
     return state;
   }
 
-  componentDidMount(){
+  componentDidMount() {
     console.log('[App.js] componentDidMount()')
   }
 
@@ -65,7 +71,20 @@ class App extends Component {
     person.name = event.target.value;
     const persons = [...this.state.persons];
     persons[personIndex] = person;
-    this.setState({ persons: persons });
+
+    // better way to update state when you are depend on old state
+    this.setState((prevState, currentProps) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      }
+    });
+  }
+
+  loginHandler = () => {
+    this.setState({
+      isAuthenticated: true
+    });
   }
 
   render() {
@@ -74,28 +93,32 @@ class App extends Component {
     if (this.state.showPersos) {
       persons = (
         <div>
-          <Persons 
-            persons={this.state.persons} 
-            changed={this.nameChangeHandler} 
-            clicked={this.deletePerson}/>
+          <Persons
+            persons={this.state.persons}
+            changed={this.nameChangeHandler}
+            clicked={this.deletePerson}
+            isAuthenticated={this.state.isAuthenticated} />
         </div>
       );
     }
 
     return (
-      <div className='App'>
+      <Aux classes={'App'}>
         <button onClick={() => {
-          this.setState({showCokpit: false});
+          this.setState({ showCokpit: false });
         }}>Show Cokpit</button>
-        {this.state.showCokpit ? <Cokpit
-        persons={this.state.persons}
-        title={this.props.appTitle} 
-        person={this.state.persons}
-        toggle={this.togglePersonHandler}
-        showPersos={this.state.showPersos}/> : null}
-        {persons}
-      </div>
+        <AuthConext.Provider 
+        value={{authenticated : this.state.isAuthenticated, login : this.loginHandler}}>
+          {this.state.showCokpit ? <Cokpit
+            personsLength={this.state.persons.length}
+            title={this.props.appTitle}
+            person={this.state.persons}
+            toggle={this.togglePersonHandler}
+            showPersos={this.state.showPersos} /> : null}
+          {persons}
+        </AuthConext.Provider>
+      </Aux>
     );
   }
 }
-export default App;
+export default withClass(App, 'App');
