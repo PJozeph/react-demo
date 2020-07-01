@@ -4,10 +4,10 @@ import Styled from 'styled-components';
 
 
 const BuildControl = Styled.div`
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
 `
 const BuildButton = Styled.button`
     display: block;
