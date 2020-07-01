@@ -7,7 +7,7 @@ const Burger = Styled.div`
     width: 100%;
     margin: auto;
     height: 250px;
-    // overflow: scroll;
+    overflow: scroll;
     text-align: center;
     font-weight: bold;
     font-size: 1.2rem;
@@ -22,8 +22,6 @@ const Burger = Styled.div`
         height: 500px;
 `
 const burger = (props) => {
-    console.log(props.ingredients);
-    console.log('props.ingrediens');
     let transformedIngredients = Object.keys(props.ingredients)
     .map(ingredientKey => {
         return [...Array(props.ingredients[ingredientKey])].map((_,i) => {

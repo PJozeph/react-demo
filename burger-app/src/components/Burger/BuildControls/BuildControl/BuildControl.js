@@ -36,6 +36,18 @@ const LessButton = Styled.button`
     outline: none;
     background-color: #D39952;
     color: white;
+
+    &:hover, .BuildControl .Less:active {  
+        background-color: #DAA972;
+        color: white;
+    }
+
+    &:disabled {
+        color: currentColor;
+        cursor: not-allowed;
+        opacity: 0.5;
+        text-decoration: none;
+      }
 `
 const MoreButton = Styled.button`
     display: block;
@@ -48,12 +60,17 @@ const MoreButton = Styled.button`
     outline: none;
     background-color: #8F5E1E;
     color: white;
+
+    &:hover,.BuildControl .More:active {
+        background-color: #99703F;
+        color: white;
+    }
 `
 const buildControl = (props) => (
     <BuildControl>
         <Ingerdient>{props.label}</Ingerdient>
-        <LessButton>Less</LessButton>
-        <MoreButton>More</MoreButton>
+        <LessButton onClick={props.removed} disabled={props.disabled}>Less</LessButton>
+        <MoreButton onClick={props.added} >More</MoreButton>
     </BuildControl>
 );
 
