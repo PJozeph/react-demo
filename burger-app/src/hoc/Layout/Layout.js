@@ -6,7 +6,7 @@ import SideDraw from '../../components/Navigation/SideDrawer/SideDrawer';
 
 let MainContent = Styled.main`
     margin-top: 75px;
-`;
+    `;
 
 class Layout extends Component {
 
@@ -30,7 +30,6 @@ class Layout extends Component {
     render() {
         return (
             <Aux>
-                <p>éfjewrljkn</p>
                 <Toolbar open={this.sideDrawerOpen} />
                 <SideDraw
                     open={this.state.showSideDrawer}

@@ -28,7 +28,7 @@ const StyledHeader = Styled.header`
 `
 const StyledNav = Styled.nav`
     height: 100%;
-`
+    `
 const toolbar = (props) => (
     <StyledHeader>
         <SideDrawerToggle click={props.open}></SideDrawerToggle>

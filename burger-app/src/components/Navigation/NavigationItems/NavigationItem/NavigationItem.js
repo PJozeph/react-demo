@@ -16,7 +16,6 @@ const ListItem = Styled.li`
         width: auto;
         align-items: center;
     }
-    
 `
 
 const Anchore = Styled.a`
