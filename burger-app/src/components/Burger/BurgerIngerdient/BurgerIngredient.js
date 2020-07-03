@@ -83,7 +83,6 @@ let Seeds2 = Styled.div`
         box-shadow: inset 1px 3px #c9c9c9;   
     }
 `
-
 let Meat = Styled.div`
     width: 80%;
     height: 8%;

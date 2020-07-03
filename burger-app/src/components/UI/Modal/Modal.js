@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Styled from 'styled-components';
 import Aux from '../../../hoc/Auxalirity';
 import Backdrop from '../../UI/Backdrop/Backdrop';
-const Modal = Styled.div`
+
+const ModalDiv = Styled.div`
         position: fixed;
         z-index: 500;
         background-color: white;
@@ -21,16 +22,23 @@ const Modal = Styled.div`
     }
 `
 
-const modal = (props) => (
-    <Aux>
-        <Backdrop show={props.show} click={props.modalClose}/>
-        <Modal style={{
-            transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
-            opacity: props.show ? '1' : '0'
-        }}>
-            {props.children}
-        </Modal>
-    </Aux>
-);
+class Modal extends Component {
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.show !== this.props.show;
+    }
+    render() {
+        return (
+            <Aux>
+                <Backdrop show={this.props.show} click={this.props.modalClose} />
+                <ModalDiv style={{
+                    transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
+                    opacity: this.props.show ? '1' : '0'
+                }}>
+                    {this.props.children}
+                </ModalDiv>
+            </Aux>
+        );
+    };
+}
 
-export default modal;
+export default Modal;

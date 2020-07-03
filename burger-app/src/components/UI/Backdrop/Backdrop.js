@@ -10,7 +10,6 @@ const Backdrop = Styled.div`
     top: 0;
     background-color: rgba(0, 0, 0, 0.5); 
 `
-
 const backdrop = (props) => (
     props.show ? <Backdrop onClick={props.click}></Backdrop> : null
 );
