@@ -30,7 +30,7 @@ class Modal extends Component {
     render() {
         return (
             <Aux>
-                <Backdrop show={this.props.show} click={this.props.modalClose} />
+                <Backdrop show={this.props.show} click={this.props.clicked} />
                 <ModalDiv style={{
                     transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
                     opacity: this.props.show ? '1' : '0'

@@ -33,8 +33,8 @@ const withErrorHandler = (WrappedComponent, axios) => {
                 <Aux>
                     <Modal 
                     show={this.state.error} 
-                    click={this.errorConfirmed}>
-                        {this.state.error}
+                    clicked={this.errorConfirmed}>
+                        {this.state.error ? this.state.error.message : null}
                     </Modal>
                     <WrappedComponent {...this.props} />
                 </Aux>
