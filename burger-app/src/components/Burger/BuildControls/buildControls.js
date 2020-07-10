@@ -55,9 +55,9 @@ const OrderButton = Styled.button`
 
 const controls = [
     { label: 'Salad', type: 'salad' },
-    { label: 'Chees', type: 'chees' },
+    { label: 'Cheese', type: 'cheese' },
     { label: 'Bacon', type: 'bacon' },
-    { label: 'Maet', type: 'meat' },
+    { label: 'Meat', type: 'meat' },
 ]
 const buildControls = (props) => (
     <BuildControls>

@@ -97,7 +97,7 @@ let Salad = Styled.div`
     background: linear-gradient(#228c1d, #91ce50);
     border-radius: 20px;
 `
-let Chees = Styled.div`    
+let Cheese = Styled.div`    
     width: 90%;
     height: 4.5%;
     margin: 2% auto;
@@ -130,8 +130,8 @@ class BurgerIngredient extends Component {
             case ('meat'):
                 ingredient = <Meat></Meat>
                 break;
-            case ('chees'):
-                ingredient = <Chees></Chees>
+            case ('cheese'):
+                ingredient = <Cheese></Cheese>
                 break;
             case ('salad'):
                 ingredient = <Salad></Salad>
