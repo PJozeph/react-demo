@@ -21,8 +21,8 @@ const NavigationList = Styled.ul`
 const navigationItems = () => (
 
     <NavigationList>
-        <NavigationItem link="/" active >Burger</NavigationItem>
-        <NavigationItem link="/" active >ChekOut</NavigationItem>
+        <NavigationItem link="/" >Burger Builder</NavigationItem>
+        <NavigationItem link="/orders"  >Order</NavigationItem>
     </NavigationList>
 );
 

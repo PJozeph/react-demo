@@ -1,0 +1,30 @@
+.LinkItem {color: #8F5C2C;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+
+}
+
+.LinkItem:hover,
+    :active,
+    .active {
+    color: #40A4C8;
+}
+
+@media (min-width: 500px) {
+    .LinkItem {
+        color: white;
+        height: 100%;
+        padding: 16px 10px;
+        border-bottom: 4px solid transparent;
+    }
+
+    .LinkItem:hover,
+    :active,
+    .active {
+        background-color: #8F5C2C;
+        border-bottom: 4px solid #40A4C8;
+        color: white;
+    }
+}

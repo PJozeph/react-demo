@@ -11,7 +11,7 @@ const Button = Styled.button`
     padding: 10px;
     margin: 10px;
     font-weight: bold;
-    color: ${props  => (props.type === 'succes' ? '#5C9210' :  '#944317')};
+    color: ${props  => (props.type === 'success' ? '#5C9210' :  '#944317')};
 
     &:first-of-type {
     margin-left: 0;

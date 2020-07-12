@@ -3,6 +3,8 @@ import Styled from 'styled-components';
 
 import BurgerIngredient from '../Burger/BurgerIngerdient/BurgerIngredient';
 
+import {withRouter} from 'react-router-dom';
+
 const Burger = Styled.div`
     width: 100%;
     margin: auto;
@@ -22,6 +24,7 @@ const Burger = Styled.div`
         height: 500px;
 `
 const burger = (props) => {
+    console.log(props);
     let transformedIngredients = Object.keys(props.ingredients)
     .map(ingredientKey => {
         return [...Array(props.ingredients[ingredientKey])].map((_,i) => {
@@ -45,4 +48,4 @@ const burger = (props) => {
     );
 }
 
-export default burger;
+export default withRouter(burger);
