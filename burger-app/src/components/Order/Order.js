@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Styled from 'styled-components';
-import { render } from '@testing-library/react';
 
 const OrderContainer = Styled.div`
     width: 80%;
