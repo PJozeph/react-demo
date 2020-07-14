@@ -103,11 +103,14 @@ class ContactData extends Component {
                         {value : 'fastest', display: 'Fastest'},
                         {value : 'cheapest', display: 'Cheapest'}
                     ]
-                }, 
-                value : ''
+                },
+                valid: true, 
+                value : '',
+                validation : {}
             },
 
         },
+        formIsValid: false,
         loading: false
     }
 
@@ -143,6 +146,8 @@ class ContactData extends Component {
             orderData: formData
         }
 
+        console.log(order);
+
         axios.post("orders.json", order)
             .then((response) => { 
                 this.setState({ loading: false });   
@@ -160,12 +165,15 @@ class ContactData extends Component {
         
         updatedOrderFormElement.value = event.target.value;
         updatedOrderFormElement.valid = this.checkValidity(updatedOrderFormElement.value ,updatedOrderFormElement.validation, updatedOrderFormElement.touched);
-        console.log('checkValidity')
-        console.log(updatedOrderFormElement);
         updatedOrderFormElement.touched = true;
-        console.log(updatedOrderFormElement);
         updatedForm[inputIdentifier] = updatedOrderFormElement;
-        this.setState({orderForm: updatedForm});
+
+        let formIsValid = true;
+        for (let inputIdentifier in updatedForm) {
+            formIsValid = updatedForm[inputIdentifier].valid && formIsValid;
+        }
+
+        this.setState({orderForm: updatedForm, formIsValid : formIsValid});
     }
 
     render() {
@@ -192,7 +200,7 @@ class ContactData extends Component {
                         touched={element.config.touched}/>
                     ) )}
                 </FormContainer>
-                <Button type='success' clicked={this.orderHandler}>ORDER</Button>
+                <Button type='success' clicked={this.orderHandler} disabled={!this.state.formIsValid} >ORDER</Button>
             </form>
         );
 

@@ -35,8 +35,7 @@ const InputElement = Styled.input`
             return `
           border: 1px solid ${props.invalid ? '#ccc;' : 'red;'}
           background-color: ${ props.invalid ? 'white;' : '#fca39d;'}
-        `}
-    }}
+        `}}}
 `
 const input = (props) => {
     let inputElement = null;
@@ -63,10 +62,16 @@ const input = (props) => {
         default:
             inputElement = null;
     }
+    let validationMessage = null ;
+    if(!props.invalid && props.touched) {
+        validationMessage = (<p>Please enter valid value</p>);
+    }
+
     return (
         <InputElementContainer>
             <label>{props.label}</label>
             {inputElement}
+            {validationMessage}
         </InputElementContainer>
     );
 }
