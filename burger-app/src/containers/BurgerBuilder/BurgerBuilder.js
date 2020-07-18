@@ -7,7 +7,7 @@ import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import axios from '../../axios-order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import * as actionType from '../../store/actions';
+import * as burgerBuilderActions from '../../store/actions/index';
 import { connect } from 'react-redux';
 
 class BurgerBuilder extends Component {
@@ -19,57 +19,8 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount() {
-        // axios.get('ingredients.json')
-        //     .then((response) => {
-        //         this.setState({
-        //             ingredients: response.data,
-        //             loading : false
-        //         });
-        //     }).catch((error) => {
-        //         this.setState({
-        //             error : true
-        //         });
-        //     })
+        this.props.onInitIngredients();
     }
-
-    // addIngredientHandler = (type) => {
-    //     const oldCount = this.state.ingredients[type];
-    //     const updatedCount = oldCount + 1;
-    //     const updatedIngredients = { ...this.state.ingredients };
-    //     updatedIngredients[type] = updatedCount;
-
-    //     const priceAddition = INGREDIENT_PRICES[type];
-    //     const oldPrice = this.state.totalPrice;
-    //     const newPrice = oldPrice + priceAddition;
-
-    //     this.setState({
-    //         totalPrice: newPrice,
-    //         ingredients: updatedIngredients
-    //     });
-
-    //     this.updatePurchasableState(updatedIngredients);
-    // }
-
-    // removeIngredientHandler = (type) => {
-    //     const oldCount = this.state.ingredients[type];
-    //     if (oldCount <= 0) {
-    //         return;
-    //     }
-    //     const updatedCount = oldCount - 1;
-    //     const updateIngredients = { ...this.state.ingredients };
-    //     updateIngredients[type] = updatedCount;
-
-    //     const minusPrice = INGREDIENT_PRICES[type];
-    //     const oldTotalPrice = this.state.totalPrice;
-    //     const newTotalPrice = oldTotalPrice - minusPrice;
-
-    //     this.setState({
-    //         ingredients: updateIngredients,
-    //         totalPrice: newTotalPrice
-    //     });
-
-    //     this.updatePurchasableState(updateIngredients);
-    // }
 
     updatePurchasableState(ingredients) {
         const sum = Object.keys(ingredients).map(
@@ -77,7 +28,7 @@ class BurgerBuilder extends Component {
         ).reduce((sum, element) => {
             return sum + element;
         }, 0)
-        return  sum > 0;
+        return sum > 0;
     }
 
     purchaseHandler = () => {
@@ -106,7 +57,7 @@ class BurgerBuilder extends Component {
         }
 
         let orderSummary = null;
-        let burger =  this.state.error ? <p>Ingredients can not loaded </p> : (<Spinner />)
+        let burger = this.props.error ? <p>Ingredients can not loaded </p> : (<Spinner />)
         if (this.props.ingredients) {
             burger = (
                 <Aux>
@@ -128,10 +79,6 @@ class BurgerBuilder extends Component {
                 totalPrice={this.props.totalPrice}></OrderSummary>);
         }
 
-        if (this.state.loading) {
-            orderSummary = (<Spinner />)
-        }
-
         return (
             <Aux>
                 <Modal show={this.state.purchasing} modalClose={this.purchaseCancelHandler}>
@@ -145,15 +92,17 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        totalPrice: state.totalPrice
+        ingredients: state.burgerBuilder.ingredients,
+        totalPrice: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddIngredient: (name) => dispatch({ type: actionType.ADD_INGREDIENT , ingredientName : name}),
-        onRemoveIngredient: (name) => dispatch({ type: actionType.REMOVE_INGREDIENT, ingredientName : name })
+        onAddIngredient: (name) => dispatch(burgerBuilderActions.addIngredient(name)),
+        onRemoveIngredient: (name) => dispatch(burgerBuilderActions.removeIngredient(name)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
     }
 }
 
