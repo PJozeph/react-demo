@@ -3,44 +3,44 @@ import './App.css';
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Checkout from './containers/Checkout/Checkout';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, withRouter } from 'react-router-dom';
 import Orders from './containers/Orders/Orders';
 
-import { Provider } from 'react-redux';
-import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
-import burgerBuilderReducer from './store/reducers/burgerBuilder';
-import orderReducer from './store/reducers/order';
-
-import thunk from 'redux-thunk';
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
-const rootReducer = combineReducers({
-    burgerBuilder: burgerBuilderReducer,
-    order: orderReducer
-});
-
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+import Auth from './containers/Auth/Auth';
+import Logout from './containers/Auth/Logout/logout';
+import { connect } from 'react-redux';
+import * as actions from './store/actions/index';
 
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
+
   render() {
     return (
       <div>
-        <Provider store={store}>
           <BrowserRouter>
             <Layout>
               <Switch>
                 <Route path='/checkout' component={Checkout} />
                 <Route path='/orders' component={Orders} />
+                <Route path='/auth' component={Auth} />
+                <Route path='/logout' component={Logout} />
                 <Route path='/' exact component={BurgerBuilder} />
               </Switch>
             </Layout>
           </BrowserRouter>
-        </Provider>
       </div>
     );
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    onTryAutoSignup: () => dispatch(actions.authCheckState())
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(App));

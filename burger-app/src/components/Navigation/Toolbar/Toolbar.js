@@ -34,7 +34,7 @@ const toolbar = (props) => (
         <SideDrawerToggle click={props.open}></SideDrawerToggle>
         <Logo height="80%" />
         <StyledNav className="DesktopOnly">
-            <NavigationItems />
+            <NavigationItems isAuthenticated={props.isAuth} />
         </StyledNav>
     </StyledHeader>
 );

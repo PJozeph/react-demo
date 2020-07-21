@@ -18,11 +18,13 @@ const NavigationList = Styled.ul`
         flex-flow: row;
     }
 `
-const navigationItems = () => (
+const navigationItems = (props) => (
 
     <NavigationList>
         <NavigationItem link="/" >Burger Builder</NavigationItem>
-        <NavigationItem link="/orders"  >Order</NavigationItem>
+        {props.isAuthenticated ? <NavigationItem link="/orders"  >Order</NavigationItem> : null}
+        {!props.isAuthenticated ? <NavigationItem link="/auth"  >Login</NavigationItem> :
+        <NavigationItem link="/logout"  >Logout</NavigationItem>}
     </NavigationList>
 );
 
