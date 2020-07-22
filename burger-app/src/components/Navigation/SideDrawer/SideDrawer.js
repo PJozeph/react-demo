@@ -23,21 +23,21 @@ const sideDrawer = (props) => {
     padding: 32px 16px;
     box-sizing: border-box;
     transition: transform 0.3s ease-out;
+    ${props.open ? 'transform: translateX(0)' : 'transform: translateX(-100%)'}
 
     @media(min-width: 500px) {
         display: none;
         margin-right: 10px;
-    }
-
-     ${props.open ? 'transform: translateX(0)' : 'transform: translateX(-100%)'}
-    `
+    }`
+    
     return (
         <Aux>
             <BackDrop show={props.open} click={props.click} ></BackDrop>
-            <SideDrawDiv open={props.open}  >
+            <SideDrawDiv open={props.open} onClick={props.click}  >
                 <Logo height="11%" />
                 <nav>
-                    <NavigationItems isAuthenticated={props.isAuth} />
+                    <NavigationItems 
+                    isAuthenticated={props.isAuth} />
                 </nav>
             </SideDrawDiv>
         </Aux>

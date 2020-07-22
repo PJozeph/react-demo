@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Alert from '@material-ui/lab/Alert';
 import { Redirect } from 'react-router-dom';
+import {checkValidity} from '../../shared/utility';
 
 const ContactDataContainer = Styled.div`
     margin: 20px auto;
@@ -70,30 +71,13 @@ class Auth extends Component {
         }
     }
 
-    checkValidity(value, rules, touched) {
-        let isValid = true;
-
-        if (rules.required && touched) {
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        if (rules.minLength && touched) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-
-        if (rules.maxLength && touched) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-        return isValid;
-    }
-
     inputChangedHandler = (event, controlName) => {
         const updatedControls = {
             ...this.state.controls,
             [controlName]: {
                 ...this.state.controls[controlName],
                 value: event.target.value,
-                valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
+                valid: checkValidity(event.target.value, this.state.controls[controlName].validation),
                 touched: true
             }
         };

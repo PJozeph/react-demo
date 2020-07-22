@@ -6,6 +6,7 @@ import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-order'
 import { connect } from 'react-redux';
+import {checkValidity} from '../../../shared/utility';
 import * as actions from '../../../store/actions/index';
 
 const ContactDataContainer = Styled.div`
@@ -116,23 +117,6 @@ class ContactData extends Component {
         loading: false
     }
 
-    checkValidity(value, rules, touched) {
-        let isValid = true;
-
-        if(rules.required && touched) {
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        if(rules.minLength  && touched) {
-            isValid = value.length >= rules.minLength && isValid;
-        }
-
-        if(rules.maxLength  && touched) {
-            isValid = value.length <= rules.maxLength && isValid;
-        }
-        return isValid;
-    } 
-
     orderHandler = (event) => {
         event.preventDefault();
 
@@ -156,7 +140,7 @@ class ContactData extends Component {
         const updatedOrderFormElement = {...updatedForm[inputIdentifier]};
         
         updatedOrderFormElement.value = event.target.value;
-        updatedOrderFormElement.valid = this.checkValidity(updatedOrderFormElement.value ,updatedOrderFormElement.validation, updatedOrderFormElement.touched);
+        updatedOrderFormElement.valid = checkValidity(updatedOrderFormElement.value ,updatedOrderFormElement.validation, updatedOrderFormElement.touched);
         updatedOrderFormElement.touched = true;
         updatedForm[inputIdentifier] = updatedOrderFormElement;
 
