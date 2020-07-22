@@ -11,7 +11,6 @@ import Logout from './containers/Auth/Logout/logout';
 import { connect } from 'react-redux';
 import * as actions from './store/actions/index';
 
-
 class App extends Component {
 
   componentDidMount() {
@@ -34,7 +33,6 @@ class App extends Component {
           <Route path='/checkout' component={Checkout} />
           <Route path='/orders' component={Orders} />
           <Route path='/logout' component={Logout} />
-          <Route path='/auth' component={Auth} />
           <Route path='/' exact component={BurgerBuilder} />
           <Redirect to="/" />
         </Switch>

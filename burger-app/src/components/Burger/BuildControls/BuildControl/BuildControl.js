@@ -9,17 +9,7 @@ const BuildControl = Styled.div`
     align-items: center;
     margin: 5px 0;
 `
-const BuildButton = Styled.button`
-    display: block;
-    font: inherit;
-    padding: 5px;
-    margin : 0 5px;
-    width 80px;
-    border: 1px solid #AA6817;
-    cursor: pointer;
-    outline: none;
-`
-const Ingerdient = Styled.div`
+const Ingredient = Styled.div`
     padding: 10px;
     font-weight: bold;
     width: 80px;
@@ -68,7 +58,7 @@ const MoreButton = Styled.button`
 `
 const buildControl = (props) => (
     <BuildControl>
-        <Ingerdient>{props.label}</Ingerdient>
+        <Ingredient>{props.label}</Ingredient>
         <LessButton onClick={props.removed} disabled={props.disabled}>Less</LessButton>
         <MoreButton onClick={props.added} >More</MoreButton>
     </BuildControl>
